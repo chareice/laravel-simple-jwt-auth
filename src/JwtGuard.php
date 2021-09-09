@@ -2,6 +2,7 @@
 
 namespace Chareice\SimpleJwtAuth;
 
+use Chareice\SimpleJwtAuth\Contracts\JWTSubject;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\UserProvider;
@@ -83,5 +84,10 @@ class JwtGuard implements Guard
     }
 
     return $this->provider->validateCredentials($authenticatable, $credentials);
+  }
+
+  public function login(JWTSubject $subject): string
+  {
+    return $this->JWTService->tokenFromSubject($subject);
   }
 }
