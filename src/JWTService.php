@@ -10,10 +10,12 @@ use Firebase\JWT\JWT;
 class JWTService
 {
   protected string $JWTSecret;
+  protected string $subKey;
 
-  public function __construct(string $secret)
+  public function __construct(string $secret, string $subKey)
   {
     $this->JWTSecret = $secret;
+    $this->subKey = $subKey;
   }
 
   /**
@@ -24,7 +26,7 @@ class JWTService
   public function tokenFromSubject(JWTSubject $subject) : string
   {
     return JWT::encode([
-      'id' => $subject->getJWTIdentifier()
+      $this->getSubKey() => $subject->getJWTIdentifier()
     ], $this->JWTSecret);
   }
 
@@ -36,5 +38,10 @@ class JWTService
   public function tokenPayload(string $token)
   {
     return (array) JWT::decode($token, $this->JWTSecret, ['HS256']);
+  }
+
+  public function getSubKey() : string
+  {
+    return $this->subKey;
   }
 }

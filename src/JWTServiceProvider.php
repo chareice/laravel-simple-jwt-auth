@@ -13,7 +13,7 @@ class JWTServiceProvider extends ServiceProvider
   public function register()
   {
     $this->app->singleton('jwt', function() {
-      return new JWTService(config('app.jwt_secret'));
+      return new JWTService(config('app.jwt_secret'), config('app.jwt_sub_key', 'id'));
     });
   }
 

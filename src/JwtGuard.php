@@ -45,7 +45,7 @@ class JwtGuard implements Guard
 
     $payload = $this->getSubFromToken($token);
 
-    return $this->user = $this->provider->retrieveById($payload['uid']);
+    return $this->user = $this->provider->retrieveById($payload[$this->JWTService->getSubKey()]);
   }
 
   protected function getSubFromToken(string $token)
