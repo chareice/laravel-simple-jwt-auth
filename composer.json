@@ -1,0 +1,25 @@
+{
+    "name": "chareice/laravel-simple-jwt-auth",
+    "description": "Simple JWT Auth for laravel",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Chareice\\SimpleJwtAuth\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Chareice",
+            "email": "chareice@live.com"
+        }
+    ],
+    "require": {
+        "php" : ">=7.4",
+        "laravel/framework": "^7.0 || ^8.0",
+        "firebase/php-jwt": "^5.4"
+    },
+    "require-dev": {
+        "pestphp/pest": "^1.18"
+    }
+}
