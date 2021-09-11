@@ -4,7 +4,7 @@
 namespace Chareice\SimpleJwtAuth\Contracts;
 
 
-interface JWTSubject
+interface JWTSubject extends \Illuminate\Contracts\Auth\Authenticatable
 {
   /**
    * Get the identifier that will be stored in the subject claim of the JWT.
