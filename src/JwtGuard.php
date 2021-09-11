@@ -14,13 +14,16 @@ class JwtGuard implements Guard
 
   protected JWTService $JWTService;
   protected string $inputKey;
+  protected Request $request;
 
   public function __construct(
     JWTService $JWTService,
+    Request $request,
     UserProvider $provider,
     string $inputKey = 'token'
   )
   {
+    $this->request = $request;
     $this->provider = $provider;
     $this->inputKey = $inputKey;
     $this->JWTService = $JWTService;
@@ -87,5 +90,19 @@ class JwtGuard implements Guard
   public function login(JWTSubject $subject): string
   {
     return $this->JWTService->tokenFromSubject($subject);
+  }
+
+  public function setRequest(Request $request)
+  {
+    $this->request = $request;
+
+    return $this;
+  }
+
+  public function setProvider(UserProvider $provider)
+  {
+    $this->provider = $provider;
+
+    return $this;
   }
 }
