@@ -20,11 +20,14 @@ class JWTServiceProvider extends ServiceProvider
   public function boot()
   {
     Auth::extend('simple-jwt', function (Application  $app, $name, array $config) {
-      return new JwtGuard(
+      $guard =  new JwtGuard(
         $app['jwt'],
         $app['request'],
         Auth::createUserProvider($config['provider'])
       );
+
+      $app->refresh('request', $guard, 'setRequest');
+      return $guard;
     });
   }
 }
