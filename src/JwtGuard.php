@@ -4,6 +4,7 @@ namespace Chareice\SimpleJwtAuth;
 
 use Chareice\SimpleJwtAuth\Contracts\JWTSubject;
 use Illuminate\Auth\GuardHelpers;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ class JwtGuard implements Guard
     protected JWTService $JWTService;
     protected string $inputKey;
     protected Request $request;
+    protected Authenticatable $lastAttempted;
 
     public function __construct(
         JWTService $JWTService,
@@ -93,6 +95,32 @@ class JwtGuard implements Guard
         $this->setUser($subject);
         return $token;
     }
+
+    /**
+     * Attempt to authenticate the user using the given credentials and return the token.
+     *
+     * @param  array  $credentials
+     * @param  bool  $login
+     *
+     * @return bool|string
+     */
+    public function attempt(array $credentials = [], $login = true)
+    {
+        $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
+
+        if ($this->hasValidCredentials($user, $credentials)) {
+            return $login ? $this->login($user) : true;
+        }
+
+        return false;
+    }
+
+
+    protected function hasValidCredentials($user, $credentials): bool
+    {
+        return $user !== null && $this->provider->validateCredentials($user, $credentials);
+    }
+
 
     public function setRequest(Request $request)
     {
