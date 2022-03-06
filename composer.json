@@ -16,7 +16,7 @@
     ],
     "require": {
         "php" : ">=7.4",
-        "laravel/framework": "^7.0 || ^8.0",
+        "laravel/framework": "^9.0",
         "firebase/php-jwt": "^5.4"
     },
     "require-dev": {
@@ -27,6 +27,11 @@
             "providers": [
                 "Chareice\\SimpleJwtAuth\\JWTServiceProvider"
             ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     }
 }
