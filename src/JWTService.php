@@ -23,10 +23,11 @@ class JWTService
    * @param JWTSubject $subject
    * @return string
    */
-  public function tokenFromSubject(JWTSubject $subject) : string
+  public function tokenFromSubject(JWTSubject $subject, $meta = []) : string
   {
     return JWT::encode([
-      $this->getSubKey() => $subject->getJWTIdentifier()
+        $this->getSubKey() => $subject->getJWTIdentifier(),
+        ...$meta
     ], $this->JWTSecret);
   }
 
